@@ -2,13 +2,14 @@ package com.mld.springboot.controller;
 
 import com.mld.springboot.dao.DepartmentDao;
 import com.mld.springboot.dao.EmployeeDao;
+import com.mld.springboot.entities.Department;
 import com.mld.springboot.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import java.util.Collection;
 import java.util.Map;
 
@@ -34,8 +35,29 @@ public class EmpController {
     }
 
     @PostMapping("/emp")
-    public String addEmp(Employee employee){
+    public String addEmp(Employee employee) {
         employeeDao.save(employee);
+        return "redirect:/emps";
+    }
+
+    @GetMapping("/emp/{id}")
+    public String toEditPage(@PathVariable Integer id, Model model) {
+        Employee employee = employeeDao.get(id);
+        model.addAttribute("emp", employee);
+        Collection<Department> departments = departmentDao.getDepartments();
+        model.addAttribute("depts", departments);
+        return "emp/add";
+    }
+
+    @PutMapping("/emp")
+    public String editEmp(Employee employee) {
+        employeeDao.save(employee);
+        return "redirect:/emps";
+    }
+
+    @DeleteMapping("/emp/{id}")
+    public String delEmp(@PathVariable Integer id) {
+        employeeDao.delete(id);
         return "redirect:/emps";
     }
 }

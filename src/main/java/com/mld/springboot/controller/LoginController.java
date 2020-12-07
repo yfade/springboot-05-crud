@@ -1,9 +1,12 @@
 package com.mld.springboot.controller;
 
+import com.mld.springboot.exception.UserNotExistException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +24,17 @@ public class LoginController {
         }
         session.setAttribute("userName", userName);
         return "redirect:/main.html";
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/hello")
+    public String hello(String userName) {
+        if ("aaa".equals(userName)) {
+            throw new UserNotExistException();
+        }
+        return "hello world";
+
     }
 
 }

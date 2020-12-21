@@ -2,18 +2,22 @@ package com.mld.springboot.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 /**
- * 方式一
+ * 方式二 和@ServletComponentScan配合使用
  */
-public class MyListener implements ServletContextListener {
+@WebListener
+public class MyListener2  implements ServletContextListener {
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("servlet init...");
+        System.out.println("listener2 contextInitialized...");
     }
+
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        System.out.println("servlet destroy...");
+
     }
 }
